@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { selectors, useMyStore } from './store';
 
 function App() {
+  const incrementClicked = useMyStore((action) => action.incrementClicked)
+  const fetchDitto = useMyStore((state) => state.fetchDitto)
+  const count = useMyStore(selectors.selectCount);
+
+  const buttonColor = useMyStore(selectors.selectButtonColor);
+  const dittoHeight = useMyStore((state) => state.ditto.height)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <strong>{count}</strong>
+      <button style={{ backgroundColor: buttonColor }} onClick={incrementClicked}>Click me</button>
+      <div>
+        <h3>Ditto</h3>
+        <button onClick={fetchDitto}>Get ditto height</button>
+        <div>Height: {dittoHeight}</div>
+      </div>
     </div>
   );
 }
